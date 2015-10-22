@@ -7,10 +7,10 @@
 
     <!-- versionCode is optional and Android only -->
 
-    <name>My 1st App</name>
+    <name>Phaser Hello World</name>
 
     <description>
-        An example for phonegap build docs. 
+        A test using the Phaser.js framework. 
     </description>
 
     <author href="https://www.markduiker.com" email="mark@markduiker.com">
