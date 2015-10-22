@@ -5,6 +5,8 @@
         versionCode = "10" 
         version     = "1.0.0" >
 
+    <preference name="phonegap-version" value="3.5.0" />
+
     <!-- versionCode is optional and Android only -->
 
     <name>Phaser Hello World</name>
