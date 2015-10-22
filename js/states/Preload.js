@@ -1,15 +1,14 @@
 // Preload.js
 
-var Vent = Vent || {};
-var h1_style, h2_style, h3_style, p_style, p_style_center, buttonStyle;
+var MyGame = MyGame || {};
 
 //loading the game assets
-Vent.Preload = function() {};
+MyGame.Preload = function() {};
 
-Vent.Preload.prototype = {
+MyGame.Preload.prototype = {
 	preload: function() {
 
-		createBG(0x000000);
+		MyGame.createBG(0x000000);
 
 		// show logo in loading screen
 		this.splash = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
@@ -26,33 +25,33 @@ Vent.Preload.prototype = {
 		// IMAGES **************************************************************
 
 		// fpo		
-		this.load.image('fpo-square', 'assets/img/white-square.gif');
-		this.load.image('fpo-circle', 'assets/img/white-circle.png');
-		this.load.image('common-background', 'assets/img/common-background.jpg');
+		this.load.image('fpo-square', MyGamePath + 'assets/img/white-square.gif');
+		this.load.image('fpo-circle', MyGamePath + 'assets/img/white-circle.png');
+		this.load.image('common-background', MyGamePath + 'assets/img/common-background.jpg');
 
 		// icons & emojis
-		this.load.image('emoji1', 'assets/img/i/emoji1.png');
-		this.load.image('emoji2', 'assets/img/i/emoji2.png');
-		this.load.image('emoji3', 'assets/img/i/emoji3.png');
-		this.load.image('emoji4', 'assets/img/i/emoji4.png');
+		this.load.image('emoji1', MyGamePath + 'assets/img/i/emoji1.png');
+		this.load.image('emoji2', MyGamePath + 'assets/img/i/emoji2.png');
+		this.load.image('emoji3', MyGamePath + 'assets/img/i/emoji3.png');
+		this.load.image('emoji4', MyGamePath + 'assets/img/i/emoji4.png');
 
-		this.load.image('icon-phone', 'assets/img/i/phone.png');
-		this.load.image('icon-chat', 'assets/img/i/chat.png');
-		this.load.image('icon-baseball', 'assets/img/i/baseball.png');
-		this.load.image('icon-x', 'assets/img/i/x.png');
-		this.load.image('icon-back', 'assets/img/i/arrow-left.png');
-		this.load.image('icon-cog', 'assets/img/i/cog.png');
-		this.load.image('icon-note', 'assets/img/i/note.png');
-		this.load.image('icon-speaker', 'assets/img/i/speaker.png');
-		this.load.image('icon-refresh', 'assets/img/i/refresh.png');
-		this.load.image('icon-expand', 'assets/img/i/expand.png');
-		this.load.image('icon-contract', 'assets/img/i/contract.png');
+		this.load.image('icon-phone', MyGamePath + 'assets/img/i/phone.png');
+		this.load.image('icon-chat', MyGamePath + 'assets/img/i/chat.png');
+		this.load.image('icon-baseball', MyGamePath + 'assets/img/i/baseball.png');
+		this.load.image('icon-x', MyGamePath + 'assets/img/i/x.png');
+		this.load.image('icon-back', MyGamePath + 'assets/img/i/arrow-left.png');
+		this.load.image('icon-cog', MyGamePath + 'assets/img/i/cog.png');
+		this.load.image('icon-note', MyGamePath + 'assets/img/i/note.png');
+		this.load.image('icon-speaker', MyGamePath + 'assets/img/i/speaker.png');
+		this.load.image('icon-refresh', MyGamePath + 'assets/img/i/refresh.png');
+		this.load.image('icon-expand', MyGamePath + 'assets/img/i/expand.png');
+		this.load.image('icon-contract', MyGamePath + 'assets/img/i/contract.png');
 
 
 		// AUDIO ****************************************************************  
 
 		// Firefox doesn't support .mp3 files, so include .ogg files as well.
-		this.load.audio('hit1', ['assets/audio/bat_hit_ball.mp3', 'assets/audio/bat_hit_ball.ogg']);
+		this.load.audio('hit1', [MyGamePath + 'assets/audio/bat_hit_ball.mp3', MyGamePath + 'assets/audio/bat_hit_ball.ogg']);
 
 
 		// WEB FONTS ************************************************************
@@ -63,7 +62,7 @@ Vent.Preload.prototype = {
 			//  We set a 1 second delay before calling 'createText'.
 			//  For some reason if we don't the browser cannot render the text the first time it's created.
 			active: function() {
-				Vent.game.time.events.add(Phaser.Timer.SECOND, createText, this);
+				MyGame.game.time.events.add(Phaser.Timer.SECOND, MyGame.createText, this);
 			},
 			//  The Google Fonts we want to load (specify as many as you like in the array)
 			google: {
@@ -71,9 +70,6 @@ Vent.Preload.prototype = {
 			}
 		};
 		this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
-
-
-		createStyles(); // set Title, body styles for project
 	},
 	create: function() {
 
@@ -81,64 +77,7 @@ Vent.Preload.prototype = {
 	}
 };
 
-function createText() {
+MyGame.createText = function() {
 
 	// required to load web fonts before displaying project
-}
-
-function createStyles() {
-
-	// constant colours
-	var noColour = 0xffffff,
-		isDownColour = 0xf6d809,
-		defaultColour = noColour, // 0xfc6744;
-		groundColour = 0x646A11;
-
-	var black = "#000",
-		white = "#fff";
-
-	h1_style = {
-		font: "700 50px Open Sans",
-		fill: white,
-		align: "center"
-	};
-	h2_style = {
-		font: "300 40px Open Sans",
-		fill: white,
-		align: "center"
-	};
-	h3_style = {
-		font: "300 25px Open Sans",
-		fill: white,
-		align: "center"
-	};
-	h3_style_blue = {
-		font: "300 25px Open Sans",
-		fill: "#4ac7eb",
-		align: "center"
-	};
-	p_style = {
-		font: "300 20px Open Sans",
-		fill: white
-	};
-	p_style_center = {
-		font: "300 20px Open Sans",
-		fill: white,
-		align: "center"
-	};
-	copyright_style = {
-		font: "300 10px Open Sans",
-		fill: "#938884",
-		align: "right"
-	};
-	button_style = {
-		font: "400 16px Open Sans",
-		fill: white,
-		align: "center"
-	};
-	touch_button_style = {
-		font: "400 22px Open Sans",
-		fill: black,
-		align: "center"
-	};
 }

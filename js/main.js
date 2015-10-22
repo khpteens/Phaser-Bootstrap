@@ -1,18 +1,18 @@
 // main.js
 
-var Vent = Vent || {};
+var MyGame = MyGame || {};
 
 // create game object
-Vent.game = new Phaser.Game(settings.WIDTH, settings.HEIGHT, Phaser.CANVAS, settings.CONTAINER);
+MyGame.game = new Phaser.Game(MyGame.vars.WIDTH, MyGame.vars.HEIGHT, Phaser.CANVAS, MyGame.vars.CONTAINER);
 
 // create game states
-Vent.game.state.add('Boot', Vent.Boot);
-Vent.game.state.add('Preload', Vent.Preload);
-Vent.game.state.add('MainMenu', Vent.MainMenu);
-Vent.game.state.add('Instructions', Vent.Instructions);
-Vent.game.state.add('Game', Vent.Game);
-Vent.game.state.add('Win', Vent.Win);
-Vent.game.state.add('Lose', Vent.Lose);
+MyGame.game.state.add('Boot', MyGame.Boot);
+MyGame.game.state.add('Preload', MyGame.Preload);
+MyGame.game.state.add('MainMenu', MyGame.MainMenu);
+MyGame.game.state.add('Instructions', MyGame.Instructions);
+MyGame.game.state.add('Game', MyGame.Game);
+MyGame.game.state.add('Win', MyGame.Win);
+MyGame.game.state.add('Lose', MyGame.Lose);
 
 // run
-Vent.game.state.start('Boot');
+MyGame.game.state.start('Boot');

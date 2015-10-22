@@ -1,78 +1,68 @@
 // Game.js
 
-var Vent = Vent || {};
+var MyGame = MyGame || {};
 
-Vent.Game = function() {};
+MyGame.Game = function() {};
 
-/********************************************************************/
-
-// groups
-var userInterface, bg_group;
-
-/********************************************************************/
-
-Vent.Game.prototype = {
+MyGame.Game.prototype = {
 	create: function() {
 
-		createBG(0x777777);
-		createCopyright();
+		MyGame.createBG(0x777777);
+		MyGame.createCopyright();
 
-		createWorldSettings();
-		createUI();
+		MyGame.createWorldSettings();
+		MyGame.createUI();
 
-		createSettingsPanel();
+		MyGame.createSettingsPanel();		
 	},
 	update: function() {
-		if(!settings.PAUSED){
-			// game loop goes here
-		}
+
 	},
 	render: function() {
+
 		// this.game.debug.text(this.game.time.fps || '--', 2, 14, "#00ff00");
 	}
 };
 
-function createWorldSettings() {
-	Vent.game.world.setBounds(0, 0, Vent.game.width, Vent.game.height);
-	Vent.game.stage.backgroundColor = 0x222222;
+MyGame.createWorldSettings = function() {
+	MyGame.game.world.setBounds(0, 0, MyGame.vars.WIDTH, MyGame.vars.HEIGHT);
+	MyGame.game.stage.backgroundColor = 0x222222;
 }
 
-function createUI() {
-	createInputListeners();
-	createButtons();
+MyGame.createUI = function() {
+	MyGame.createInputListeners();
+	MyGame.createButtons();
 }
 
-function createInputListeners() {}
+MyGame.createInputListeners = function() {}
 
-function createButtons() {	
+MyGame.createButtons = function() {
 
 	// Win button
-	var winBt = Vent.game.add.sprite(Vent.game.width / 2, Vent.game.height / 2 + 120, "fpo-square");
-	createBt(winBt, "Win game", "Win");
+	var winBt = MyGame.game.add.sprite(MyGame.game.width / 2, MyGame.game.height / 2 + 120, "fpo-square");
+	MyGame.createBt(winBt, "Win game", "Win");
 
 	// Lose button
-	var loseBt = Vent.game.add.sprite(Vent.game.width / 2, Vent.game.height / 2 + 180, "fpo-square");
-	createBt(loseBt, "Lose game", "Lose");
+	var loseBt = MyGame.game.add.sprite(MyGame.game.width / 2, MyGame.game.height / 2 + 180, "fpo-square");
+	MyGame.createBt(loseBt, "Lose game", "Lose");
 }
 
-function createAudio() {
+MyGame.createAudio = function() {
 
-	hit1 = Vent.game.add.audio('hit1');
+	hit1 = MyGame.game.add.audio('hit1');
 }
 
-
-
-function gameWin(delay) {
+MyGame.gameWin = function(delay) {
 
 	// remove input listeners
-	Vent.game.input.onDown.removeAll();
-	Vent.game.input.onUp.removeAll();
+	MyGame.game.input.onDown.removeAll();
+	MyGame.game.input.onUp.removeAll();
 
 	// delayed call to exit current state
 	setTimeout(function() {
 
 		// go to Finish screen
-		Vent.game.stateTransition.to("Win");
+		MyGame.game.stateTransition.to("Win");
 
 	}, delay);
 }

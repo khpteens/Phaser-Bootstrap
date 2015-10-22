@@ -1,19 +1,18 @@
 // Boot.js
 
-var Vent = Vent || {};
-var	hasTouch;
+var MyGame = MyGame || {};
 
-Vent.Boot = function() {};
+MyGame.Boot = function() {};
 
 // setting game configuration and loading the assets for the loading screen
-Vent.Boot.prototype = {	
+MyGame.Boot.prototype = {	
 	preload: function() {
 		
 		// assets we'll use in the loading screen
-		this.load.image('logo', 'assets/img/logo.png');
-		this.load.image('preloadbar', 'assets/img/preloader-bar.png');
+		this.load.image('logo', MyGamePath + 'assets/img/logo.png');
+		this.load.image('preloadbar', MyGamePath + 'assets/img/preloader-bar.png');
 
-		hasTouch = this.game.device.touch;
+		MyGame.vars.TOUCH = this.game.device.touch;
 	},
 	create: function() {
 
@@ -31,10 +30,7 @@ Vent.Boot.prototype = {
 
 		// have the game centered horizontally and vertically
 		this.scale.pageAlignHorizontally = true;
-		this.scale.pageAlignVertically = true;
-
-		// screen size will be set automatically
-		this.scale.setScreenSize(true);
+		this.scale.pageAlignVertically = true;		
 
 		// enable to allow framerate testing
 		this.time.advancedTiming = true;		
@@ -46,6 +42,7 @@ Vent.Boot.prototype = {
 		// STATE TRANSITIONS
 		// load transition plugin. Source is here https://github.com/aaccurso/phaser-state-transition-plugin
 		this.game.stateTransition = this.game.plugins.add(Phaser.Plugin.StateTransition);
+		
 		//define new properties to be tweened, duration, even ease
 		this.game.stateTransition.configure({
 		  duration: Phaser.Timer.SECOND * 0.8,

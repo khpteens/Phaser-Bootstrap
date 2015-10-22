@@ -1,71 +1,101 @@
 // Common.js holds utility functions & settings
 
-// VARIABLES ***********************************************
+MyGame.vars = {
 
-var settings = {
-	"WIDTH": 500,
-	"HEIGHT": undefined,
-	"RATIO": window.innerHeight / window.innerWidth,
-	"RATIO_MIN": 1.2,
+	"LANG": 0, // 0 = English, 1 = French	
+
+	"WIDTH": 750,
+	"HEIGHT": 500,
+
+	"TOUCH": false,
 
 	"PAUSED": false,
 
+	"GA_CODE": "",
+	"ANALYTICS_ON": false,
+
 	"SOUND_ON": true,
-	"VOLUME": 0.2,
+	"VOLUME": 1,
 
 	"FULLSCREEN": false,
+	"IFRAMED": true,
 
-	"CONTAINER": "game",
-	"FRAME": document.getElementById("game"),
-	"ELEMENT": document.querySelector('#game'),
-	"FRAME_WIDTH": Number(window.getComputedStyle(document.querySelector('#game')).width.replace(/\D/g, '')),
-	"FRAME_HEIGHT": Number(window.getComputedStyle(document.querySelector('#game')).height.replace(/\D/g, ''))
-};
-
-if (settings.RATIO <= settings.RATIO_MIN) {
-	settings.RATIO = settings.RATIO_MIN; // widest is square, no limit to height
+	"CONTAINER": "",
 }
 
-settings.HEIGHT = settings.RATIO * settings.WIDTH;
+MyGame.styles = {
 
+	"h1": {
+		font: "700 50px Open Sans",
+		fill: "#fff",
+		align: "center"
+	},
+	"h2": {
+		font: "300 40px Open Sans",
+		fill: "#fff",
+		align: "center"
+	},
+	"h3": {
+		font: "300 25px Open Sans",
+		fill: "#fff",
+		align: "center"
+	},
+	"h3_blue": {
+		font: "300 25px Open Sans",
+		fill: "#4ac7eb",
+		align: "center"
+	},
+	"p": {
+		font: "300 20px Open Sans",
+		fill: "#fff"
+	},
+	"p_center": {
+		font: "300 20px Open Sans",
+		fill: "#fff",
+		align: "center"
+	},
+	"copyright": {
+		font: "300 10px Open Sans",
+		fill: "#938884",
+		align: "right"
+	},
+	"button": {
+		font: "400 16px Open Sans",
+		fill: "#fff",
+		align: "center"
+	},
+	"touch_button": {
+		font: "400 22px Open Sans",
+		fill: "#000",
+		align: "center"
+	},
+}
 
 // FUNCTIONS ***********************************************
 
-function trace(s, c, bg) {
-	var style;
-	if (bg === undefined) bg = 'WhiteSmoke';
-	if (c !== undefined) {
-		style = 'background: ' + bg + '; color: ' + c + '; border-left: 7px solid ' + c + ';';
-	} else {
-		c = '#333';
-		style = 'background: ' + bg + '; color: ' + c + ';';
-	}
-	console.log('%c ' + s + ' ', style);
-}
+MyGame.createBG = function(color) {
+	MyGame.bg_group = MyGame.game.add.group();
 
-function createBG(color) {
-	bg_group = Vent.game.add.group();
-
-	var bg = Vent.game.add.graphics(0, 0);
+	var bg = MyGame.game.add.graphics(0, 0);
 	bg.inputEnabled = true;
 	bg.beginFill(color, 1);
 	bg.boundsPadding = 0;
-	bg.drawRect(0, 0, Vent.game.width, Vent.game.height);
-	bg_group.add(bg);
+	bg.drawRect(0, 0, MyGame.game.width, MyGame.game.height);
+	MyGame.bg_group.add(bg);
 
 	// ADD A COMMON BG IMAGE
 
-	var st = Vent.game.state.getCurrentState().key;
+	var st = MyGame.game.state.getCurrentState().key;
 
 	if (st != "Preload" /*&& st != "MainMenu"*/ ) {
-		var bg_image = Vent.game.add.sprite(0, 0, "common-background");
-		bg_image.width = Vent.game.width;
-		bg_image.height = Vent.game.height;
+		var bg_image = MyGame.game.add.sprite(0, 0, "common-background");
+		bg_image.width = MyGame.game.width;
+		bg_image.height = MyGame.game.height;
 		bg_image.alpha = 0.1;
 	}
 }
 
-function createBt(button, label_text, target_state, shape, iconImage) {
+MyGame.createBt = function(button, label_text, target_state, shape, iconImage) {
 
 	if (!label_text) label_text = "";
 	if (!shape) shape = "default";
@@ -87,7 +117,7 @@ function createBt(button, label_text, target_state, shape, iconImage) {
 	button.alpha = 0;
 
 	// add border
-	var border = Vent.game.add.graphics(0, 0);
+	var border = MyGame.game.add.graphics(0, 0);
 	border.lineStyle(2, 0xffffff, 1);
 	if (shape == "square") {
 		// border.drawCircle(button.x, button.y, button.width, button.height);
@@ -102,10 +132,10 @@ function createBt(button, label_text, target_state, shape, iconImage) {
 	// add label
 	var label;
 	if (label_text.indexOf("icon") == -1) {
-		label = Vent.game.add.text(button.x, button.y + 3, label_text.toUpperCase(), button_style);
+		label = MyGame.game.add.text(button.x, button.y + 3, label_text.toUpperCase(), MyGame.styles.button);
 		label.lineSpacing = -5;
 	} else {
-		label = Vent.game.add.sprite(button.x, button.y, label_text);
+		label = MyGame.game.add.sprite(button.x, button.y, label_text);
 		label.width = 25;
 		label.height = 25;
 	}
@@ -115,7 +145,7 @@ function createBt(button, label_text, target_state, shape, iconImage) {
 	var icon;
 	var iconMod = 30;
 	if (iconImage) {
-		icon = Vent.game.add.sprite(button.x - button.width / 2 + iconMod, button.y, iconImage);
+		icon = MyGame.game.add.sprite(button.x - button.width / 2 + iconMod, button.y, iconImage);
 		icon.anchor.set(0.5);
 		icon.height = button.height - iconMod;
 		icon.width = button.height - iconMod;
@@ -125,7 +155,7 @@ function createBt(button, label_text, target_state, shape, iconImage) {
 	// Mouse Over
 	button.events.onInputOver.add(function() {
 
-		Vent.game.add.tween(button).to({
+		MyGame.game.add.tween(button).to({
 			// width: button.w + 10,
 			// height: button.h + 10,
 			alpha: 1
@@ -137,7 +167,7 @@ function createBt(button, label_text, target_state, shape, iconImage) {
 	// Mouse Out
 	button.events.onInputOut.add(function() {
 
-		Vent.game.add.tween(button).to({
+		MyGame.game.add.tween(button).to({
 			alpha: 0
 		}, 200, Phaser.Easing.Quadratic.In, true);
 
@@ -156,160 +186,168 @@ function createBt(button, label_text, target_state, shape, iconImage) {
 		button.tint = 0xffffff;
 
 		if (target_state != false && target_state != undefined) {
-			Vent.game.stateTransition.to(target_state);
+
+			if (!MyGame.vars.TOUCH) {
+				MyGame.game.stateTransition.to(target_state);
+			} else {
+				MyGame.game.state.start(target_state);
+			}
 		}
 	});
 
 	// to address all button elements use group 
-	btGroup = Vent.game.add.group();
+	MyGame.btGroup = MyGame.game.add.group();
 
-	btGroup.add(button);
-	btGroup.add(border);
-	btGroup.add(label);
+	MyGame.btGroup.add(button);
+	MyGame.btGroup.add(border);
+	MyGame.btGroup.add(label);
 	// if (iconImage) btGroup.add(icon);
 
-	button.group = btGroup; // save a reference for later usage
+	button.group = MyGame.btGroup; // save a reference for later usage
 }
 
-function createCopyright() {
+MyGame.createCopyright = function() {
 
 	// add copyright text	
-	var c = Vent.game.add.text(Vent.game.width - 10, Vent.game.height, copyright_txt[0], copyright_style);
+	var c = MyGame.game.add.text(MyGame.game.width - 10, MyGame.game.height, MyGame.txt.copyright[MyGame.vars.LANG], MyGame.styles.copyright);
 	c.anchor.set(1, 1);
 
 	// release	
-	var release = Vent.game.add.text(10, Vent.game.height, release_txt[0], copyright_style);
+	var release = MyGame.game.add.text(10, MyGame.game.height, MyGame.txt.release[MyGame.vars.LANG], MyGame.styles.copyright);
 	release.anchor.set(0, 1);
 }
 
-function openInNewTab(url) {
+MyGame.openInNewTab = function(url) {
 	var win = window.top.open(url, '_blank');
 	win.focus();
 }
 
-function commaSeparateNumber(val) {
+MyGame.commaSeparateNumber = function(val) {
 	val = Number(val).toLocaleString('en');
 	return val;
 }
 
-function goToHomepage() {
-	var r = confirm("Are you sure you want to leave this page?");
-	if (r === true) {
-		openInNewTab(home_url);
-	} else {
-		// do nothing if cancel is pressed
-	}
-}
+MyGame.playAudio = function(mysound) {
 
-function playAudio(mysound) {
+	if (MyGame.vars.SOUND_ON && MyGame.vars.VOLUME > 0) {
 
-	if (settings.SOUND_ON && settings.VOLUME > 0) {
-
-		mysound.volume = settings.VOLUME;
+		mysound.volume = MyGame.vars.VOLUME;
 		mysound.play();
 		mysound.frame = 0;
 	}
 }
 
-function createSettingsPanel() {
-	createSettingsButton();
-	createSettingsScreen();
+MyGame.createSettingsPanel = function() {
+	MyGame.createSettingsButton();
+	MyGame.createSettingsScreen();
 }
 
-function createSettingsButton() {
-	var settingsBt = Vent.game.add.sprite(Vent.game.width - 29, 29, "fpo-square");
-	createBt(settingsBt, "icon-cog", false, "square");
+MyGame.createSettingsButton = function() {
+	var settingsBt = MyGame.game.add.sprite(MyGame.game.width - 29, 29, "fpo-square");
+	MyGame.createBt(settingsBt, "icon-cog", false, "square");
 	settingsBt.events.onInputUp.add(function() {
-		settingsPanelToggle();
+		MyGame.settingsPanelToggle();
 	});
 }
 
-function createSettingsScreen() {
+MyGame.createSettingsScreen = function() {
 
-	settingsPanel = Vent.game.add.group();
+	MyGame.settingsPanel = MyGame.game.add.group();
 
 	// background
-	var settingsBg = Vent.game.add.graphics(0, 0);
+	var settingsBg = MyGame.game.add.graphics(0, 0);
 	settingsBg.inputEnabled = true;
 	settingsBg.beginFill(0x4ac7eb, 1);
 	settingsBg.boundsPadding = 0;
-	settingsBg.drawRect(0, 0, Vent.game.width, 60);
-	settingsBg.alpha = 0.90;
-	settingsPanel.add(settingsBg);
+	settingsBg.drawRect(0, 0, MyGame.game.width, MyGame.game.height);
+	settingsBg.alpha = 0.95;
+	MyGame.settingsPanel.add(settingsBg);
 
 	// close button
-	var closeBt = Vent.game.add.sprite(Vent.game.width - 29, 29, "fpo-square");
-	createBt(closeBt, "icon-x", false, "square");
+	var closeBt = MyGame.game.add.sprite(MyGame.game.width - 29, 29, "fpo-square");
+	MyGame.createBt(closeBt, "icon-x", false, "square");
 	closeBt.events.onInputUp.add(function() {
-		settingsPanelToggle();
+		MyGame.settingsPanelToggle();
 	});
-	settingsPanel.add(closeBt.group);
+	MyGame.settingsPanel.add(closeBt.group);
 
 	// "Settings" title
-	var title = Vent.game.add.text(29, 29, "Settings", p_style);
-	title.anchor.set(0, 0.5);
-	settingsPanel.add(title);
+	var title = MyGame.game.add.text(MyGame.game.width / 2, MyGame.game.height / 2 - 180, MyGame.txt.settings[MyGame.vars.LANG], MyGame.styles.h2);
+	title.anchor.set(0.5);
+	MyGame.settingsPanel.add(title);
 
 	// soundBt
-	var soundBt = Vent.game.add.sprite(Vent.game.width / 2 - 40, 29, "fpo-square");
-	createBt(soundBt, "icon-note", false, "square");
+	var soundBt = MyGame.game.add.sprite(MyGame.game.width / 2 - 40, MyGame.game.height / 2, "fpo-square");
+	MyGame.createBt(soundBt, "icon-note", false, "square");
 	soundBt.events.onInputUp.add(function() {
-		soundToggle();
+		MyGame.soundToggle();
 	});
-	settingsPanel.add(soundBt.group);
+	MyGame.settingsPanel.add(soundBt.group);
 
 	// fullscreenBt
-	var fullscreenBt = Vent.game.add.sprite(Vent.game.width / 2 + 40, 29, "fpo-square");
-	createBt(fullscreenBt, "icon-expand", false, "square");
+	var fullscreenBt = MyGame.game.add.sprite(MyGame.game.width / 2 + 40, MyGame.game.height / 2, "fpo-square");
+	MyGame.createBt(fullscreenBt, "icon-expand", false, "square");
 	fullscreenBt.events.onInputUp.add(function() {
-		fullscreenToggle();
+		MyGame.fullscreenToggle();
 	});
-	settingsPanel.add(fullscreenBt.group);
+	MyGame.settingsPanel.add(fullscreenBt.group);
 
-	settingsPanel.visible = false;
+	MyGame.settingsPanel.visible = false;
 }
 
-function settingsPanelToggle() {
+MyGame.settingsPanelToggle = function() {
 
-	if (!settingsPanel.visible) {
-		settingsPanel.visible = true;
+	if (!MyGame.settingsPanel.visible) {
+		MyGame.settingsPanel.visible = true;
 	} else {
-		settingsPanel.visible = false;
+		MyGame.settingsPanel.visible = false;
 	}
 }
 
-function soundToggle() {
+MyGame.soundToggle = function() {
 
-	if (!settings.SOUND_ON) {
-		settings.SOUND_ON = true;
-		settings.VOLUME = 0.2;
-		trace("Sound On");
+	if (!MyGame.vars.SOUND_ON) {
+		MyGame.vars.SOUND_ON = true;
+		MyGame.vars.VOLUME = 1;
 	} else {
-		settings.SOUND_ON = false,
-			settings.VOLUME = 0;
-		trace("Sound Off");
+		MyGame.vars.SOUND_ON = false,
+			MyGame.vars.VOLUME = 0;
 	}
 }
 
-function fullscreenToggle() {
+MyGame.fullscreenToggle = function() {
 
-	if (!settings.FULLSCREEN) {
+	if (!MyGame.vars.FULLSCREEN) {
 
-		settings.FULLSCREEN = true;
-		settings.FRAME_WIDTH = settings.FRAME.style.width;
-		settings.FRAME_HEIGHT = settings.FRAME.style.height;
+		MyGame.vars.FULLSCREEN = true;
+		MyGame.vars.FRAME_WIDTH = MyGame.vars.FRAME.style.width;
+		MyGame.vars.FRAME_HEIGHT = MyGame.vars.FRAME.style.height;
 
-		settings.FRAME.style.zindex = 500;
-		settings.FRAME.style.position = "absolute";
-		settings.FRAME.style.width = window.innerWidth + "px";
-		settings.FRAME.style.height = window.innerHeight + "px";
+		MyGame.vars.FRAME.style.zindex = 500;
+		MyGame.vars.FRAME.style.position = "absolute";
+		MyGame.vars.FRAME.style.width = window.innerWidth + "px";
+		MyGame.vars.FRAME.style.height = window.innerHeight + "px";
 
 	} else {
-		settings.FULLSCREEN = false;
+		MyGame.vars.FULLSCREEN = false;
 
-		settings.FRAME.style.zindex = 1;
-		settings.FRAME.style.position = "relative";
-		settings.FRAME.style.width = settings.FRAME_WIDTH;
-		settings.FRAME.style.height = settings.FRAME_HEIGHT;
+		MyGame.vars.FRAME.style.zindex = 1;
+		MyGame.vars.FRAME.style.position = "relative";
+		MyGame.vars.FRAME.style.width = MyGame.vars.FRAME_WIDTH;
+		MyGame.vars.FRAME.style.height = MyGame.vars.FRAME_HEIGHT;
 	}
 }
+
+MyGame.trace = function(s, c, bg) {
+	var style;
+	if (bg === undefined) bg = 'WhiteSmoke';
+	if (c !== undefined) {
+		style = 'background: ' + bg + '; color: ' + c + '; border-left: 7px solid ' + c + ';';
+	} else {
+		c = '#333';
+		style = 'background: ' + bg + '; color: ' + c + ';';
+	}
+	console.log('%c ' + s + ' ', style);
+}
+
+// type "Object.keys( window );" into console to get list of global vars

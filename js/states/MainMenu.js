@@ -1,26 +1,28 @@
 // MainMenu.js
 
-Vent.MainMenu = function() {};
+var MyGame = MyGame || {};
 
-Vent.MainMenu.prototype = {
+MyGame.MainMenu = function() {};
+
+MyGame.MainMenu.prototype = {
 	create: function() {
 
-		createBG(0x262524);
-		createCopyright();		
+		MyGame.createBG(0x262524);
+		MyGame.createCopyright();
 
 		// Project Title		
-		var t = this.game.add.text(this.game.width / 2, this.game.height / 2 - 180, title_txt[0], h1_style);
+		var t = this.game.add.text(this.game.width / 2, this.game.height / 2 - 180, MyGame.txt.title[MyGame.vars.LANG], MyGame.styles.h1);
 		t.anchor.set(0.5);
 
 		// Project Subtitle		
-		var t2 = this.game.add.text(this.game.width / 2, this.game.height / 2 - 100, subtitle_txt[0], h2_style);
+		var t2 = this.game.add.text(this.game.width / 2, this.game.height / 2 - 100, MyGame.txt.subtitle[MyGame.vars.LANG], MyGame.styles.h2);
 		t2.anchor.set(0.5);
 
 		// start bt		
 		var startBt = this.game.add.sprite(this.game.width / 2, this.game.height / 2 + 180, "fpo-square");
-		createBt(startBt, "Start", "Instructions");
+		MyGame.createBt(startBt, MyGame.txt.start[MyGame.vars.LANG], "Instructions");
 
-		createSettingsPanel();
+		MyGame.createSettingsPanel();
 	},
 	update: function() {}
 };

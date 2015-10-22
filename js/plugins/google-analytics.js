@@ -1,7 +1,5 @@
 // Google Analytics & Events
 
-var analyticsOn = false; // switch on/off Google Analytics event tracking 
-
 // (function(i, s, o, g, r, a, m) {
 //   i['GoogleAnalyticsObject'] = r;
 //   i[r] = i[r] || function() {
@@ -16,7 +14,7 @@ var analyticsOn = false; // switch on/off Google Analytics event tracking
 // ga('create', 'UA-15452863-1', 'auto');
 // ga('send', 'pageview');
 
-function trackEvent(action, location) {
+MyGame.trackEvent = function(action, location) {
 
 	location = location.replace("scene", "Scene ");
 
@@ -25,7 +23,7 @@ function trackEvent(action, location) {
 	var eventAction = gameName + ": " + action; // type of event (Click, etc)
 	var eventLabel = gameName + ": " + location; // property of action (Splash screen, Win screen, etc)
 
-	if (analyticsOn) {
+	if (MyGame.vars.ANALYTICS_ON) {
 		ga('send', 'event', eventCategory, eventAction, eventLabel);
 	}
 }

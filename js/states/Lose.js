@@ -1,28 +1,28 @@
-// Finish.js
+// Lose.js
 
-var Vent = Vent || {};
+var MyGame = MyGame || {};
 
-Vent.Lose = function() {};
+MyGame.Lose = function() {};
 
-Vent.Lose.prototype = {
+MyGame.Lose.prototype = {
 	create: function() {
 
-		createBG(0xfc6744);
-		createCopyright();
+		MyGame.createBG(0xfc6744);
+		MyGame.createCopyright();
 
 		// start game text		
-		var t = this.game.add.text(this.game.width / 2, this.game.height / 2 - 180, "The End", h1_style);
+		var t = this.game.add.text(this.game.width / 2, this.game.height / 2 - 180, MyGame.txt.loseTitle[MyGame.vars.LANG], MyGame.styles.h1);
 		t.anchor.set(0.5);		
 
 		// Restart button
 		var restartBt = this.game.add.sprite(this.game.width / 2, this.game.height / 2 + 120, "fpo-square");
-		createBt(restartBt, restart_txt[0], "Game");
+		MyGame.createBt(restartBt, MyGame.txt.restart[MyGame.vars.LANG], "Game");
 
 		// Main menu button
 		var mainMenuBt = this.game.add.sprite(this.game.width / 2, this.game.height / 2 + 180, "fpo-square");
-		createBt(mainMenuBt, mainMenu_txt[0], "MainMenu");					
+		MyGame.createBt(mainMenuBt, MyGame.txt.mainMenu[MyGame.vars.LANG], "MainMenu");					
 
-		createSettingsPanel();
+		MyGame.createSettingsPanel();
 	},
 	update: function() {}
 };

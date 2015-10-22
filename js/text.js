@@ -1,25 +1,34 @@
 // English & French text for project
 
-var title_txt = ["Project Title","Titre du projet"],
-	subtitle_txt = ["Project Subtitle","Projet sous-titres"];
+MyGame.txt = {
 
-// state titles
-var mainMenu_txt = ["Main menu", "Menu principal"],
-	instructions_txt = ["Instructions", "Comment jouer"];
+	"title": 		["Project Title", "Titre du projet"],
+	"subtitle": 	["Project Subtitle", "Projet sous-titres"],
 
-// button labels
-var start_txt = ["Start", "Commencer"],
-	restart_txt = ["Restart", "Recommencer"],
-	continue_txt = ["Continue", "Continuer"],
-	resume_txt = ["Resume", "Reprendre"],
-	next_txt = ["Next", "Suivant"],	
-	back_txt = ["Back", "Retour"],
-	playAgain_txt = ["Play again", "Rejouer"];
+	// state titles
+	"mainMenu": 	["Main menu", "Menu principal"],
+	"instructions": ["Instructions", "Comment jouer"],
+	"settings":     ["Options", "Options"], 
 
-// prompts
-var clickContinue_txt = ["Click to continue",""],
-	tapContinue_txt = ["Tap to continue",""];
+	// button labels
+	"start": 		["Start", "Commencer"],
+	"restart": 		["Restart", "Recommencer"],
+	"continue": 	["Continue", "Continuer"],
+	"resume": 		["Resume", "Reprendre"],
+	"next": 		["Next", "Suivant"],
+	"back": 		["Back", "Retour"],
+	"playAgain": 	["Play again", "Rejouer"],
 
-// extras
-var release_txt = ["BETA", "BÊTA"], // .Aug.06.2015
-	copyright_txt = ["© Brotalk", "© Coin des Gars"];
+	//titles
+	"winTitle":    ["You Win!", "Tu as gagné!"],
+	"loseTitle":   ["The End", "Fin"], 
+
+	// prompts
+	"clickContinue":["Click to continue", ""],
+	"tapContinue": 	["Tap to continue", ""],
+
+	// extras
+	"release": 		["Prototype", "Prototype"],
+	"copyright": 	["© Copyright", "© Droit d'auteur"],
+	"updated": 		["Oct.2015", "Oct.2015"],
+}
